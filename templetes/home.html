@@ -1,0 +1,67 @@
+<main role="main">
+
+    <div class="container marketing">
+
+        <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-6">
+                <hr class="margem">
+                <h1 ng-bind="tituloTabela"></h1><br>
+                <table class="table table-hover">
+                    <thead class="thead-ligh">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Nota 01</th>
+                            <th>Nota 02</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="aluno in listaAluno | filter:buscar">
+                            <th ng-bind="aluno.nome" scope="row"></th>
+                            <td ng-bind="aluno.nota01"></td>
+                            <td ng-bind="aluno.nota02"></td>
+                            <td><button class="btn btn-primary" ng-click="exibirEditarAluno(aluno)">Editar</button></td>
+                            <td><button class="btn" ng-click="excluirAluno(aluno.nome)">Excluir</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button ng-hide="exibirFormRegistro" ng-click="exibirFormRegistro = true" class="btn btn-primary">Registrar</button>
+
+
+                <hr class="margem">
+                <div class="alert alert-primary" ng-show="exibirFormRegistro">
+                    <form name="alunoForm">
+                        <h1 ng-if="!editando">Registrar Aluno</h1><br>
+                        <h1 ng-if="editando">Editar Aluno</h1><br>
+                        <div class="form-group">
+                            <input ng-model="aluno.nome" ng-required="true" name="nome" class="form-control"
+                                placeholder="Nome" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="aluno.nota01" ng-required="true" name="nota01" class="form-control"
+                                placeholder="Nota 01" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="aluno.nota02" ng-required="true" name="nota02" class="form-control"
+                                placeholder="Nota 02" type="text">
+                        </div>
+                        <div ng-show="alunoForm.nome.$invalid && alunoForm.nome.$dirty" class="alert alert-danger">
+                            Preencha o campo Nome!
+                        </div>
+                        <div ng-show="alunoForm.nota01.$invalid && alunoForm.nota01.$dirty" class="alert alert-danger">
+                            Preencha o campo Nota 01!
+                        </div>
+                        <div ng-show="alunoForm.nota02.$invalid && alunoForm.nota02.$dirty" class="alert alert-danger">
+                            Preencha o campo Nota 02!
+                        </div>
+                        <button ng-if="!editando" ng-click="registrarAluno(aluno)" ng-disabled="alunoForm.$invalid"
+                            class="btn btn-primary">Registrar</button>
+                        <button ng-if="editando" ng-click="editarAluno(aluno)" ng-disabled="alunoForm.$invalid" class="btn btn-primary">Salvar</button>
+                        <button ng-click="cancelar()" class="btn btn-warning">Cancelar</button>
+                    </form>
+                </div>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</main>
